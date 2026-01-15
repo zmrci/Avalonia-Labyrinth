@@ -1,0 +1,73 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Beadando3.ViewModels"
+             xmlns:views="clr-namespace:Beadando3.Views"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="Beadando3.Views.MainView"
+             x:DataType="vm:LabirintusViewModel">
+
+  <Design.DataContext>
+    <vm:LabirintusViewModel />
+  </Design.DataContext>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <Menu Grid.Row="0">
+      <MenuItem Header="Labyrinths">
+        <MenuItem Header="Labyrinth 1" Command="{Binding LoadLab1Command}"/>
+        <MenuItem Header="Labyrinth 2" Command="{Binding LoadLab2Command}"/>
+        <MenuItem Header="Labyrinth 3" Command="{Binding LoadLab3Command}"/>
+      </MenuItem>
+    </Menu>
+
+    <Grid Grid.Row="1">
+        <views:GameCanvas x:Name="GameCanvasControl"/>
+
+        <Grid x:Name="MobileControlBar"
+                IsVisible="{OnPlatform Android=True, Default=False}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom"
+                ColumnDefinitions="50,50,50,50" 
+                RowDefinitions="50">
+
+			<Button Grid.Column="0" Content="←"
+            Command="{Binding MoveCommand}" CommandParameter="Left"
+            Margin="2" Background="Red"/>
+
+			<Button Grid.Column="1" Content="↑"
+					Command="{Binding MoveCommand}" CommandParameter="Up"
+					Margin="2" Background="Red"/>
+
+			<Button Grid.Column="2" Content="↓"
+					Command="{Binding MoveCommand}" CommandParameter="Down"
+					Margin="2" Background="Red"/>
+
+			<Button Grid.Column="3" Content="→"
+					Command="{Binding MoveCommand}" CommandParameter="Right"
+					Margin="2" Background="Red"/>
+        </Grid>
+    </Grid>
+
+    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+      <Button Content="{Binding PauseButtonText}"
+              Command="{Binding PauseCommand}"
+              Width="120" Height="35" Margin="5"
+              HorizontalContentAlignment="Center"
+              VerticalContentAlignment="Center"/>
+      
+      <TextBlock Text="{Binding ElapsedTimeText}"
+                 VerticalAlignment="Center"
+                 Margin="20,0,0,0"
+                 FontWeight="Bold"/>
+                 
+    </StackPanel>
+
+  </Grid>
+</UserControl>
